@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 import 'package:animate_do/animate_do.dart';
+import 'package:study_pro/screens/home_screen.dart';
+import 'package:study_pro/screens/welcome_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,7 +20,10 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(seconds: 4), () {
       setState(() {
-        _showButton = true;
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) =>  WelcomeScreen()), // Navigate to Home
+        );
       });
     });
   }
