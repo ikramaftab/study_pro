@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:study_pro/screens/home_screen.dart';
 import 'package:study_pro/screens/signup_screen.dart';
+import '../widgets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -11,10 +12,10 @@ class LoginScreen extends StatelessWidget {
           children: [
             // Curved Background with Image
             ClipPath(
-              clipper: CustomWaveClipper(),
+              clipper: WaveClipper(),
               child: Container(
                 height: 300,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("assets/images/background_image.png"),
                     fit: BoxFit.cover,
@@ -29,7 +30,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Welcome Back",
+                  const Text("Welcome Back",
                       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
                   SizedBox(height: 20),
 
@@ -43,7 +44,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 15),
+                  const SizedBox(height: 15),
 
                   // Password Field
                   TextField(
@@ -105,18 +106,3 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
-// Custom Clipper for Wave Effect
-class CustomWaveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height - 50);
-    path.quadraticBezierTo(size.width / 2, size.height, size.width, size.height - 50);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}

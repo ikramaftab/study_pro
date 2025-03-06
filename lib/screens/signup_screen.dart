@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/widgets.dart';
+
 class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class SignupScreen extends StatelessWidget {
                   onPressed: () => Navigator.pop(context),
                 ),
                 const SizedBox(height: 30),
-                Text(
+                const Text(
                   "Create Account",
                   style: TextStyle(
                     fontSize: 28,
@@ -104,18 +106,3 @@ class SignupScreen extends StatelessWidget {
   }
 }
 
-class WaveClipper extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    Path path = Path();
-    path.lineTo(0, size.height - 80);
-    path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height - 80);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}

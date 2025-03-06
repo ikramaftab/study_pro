@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:study_pro/screens/user_profile.dart';
+
+import '../widgets/widgets.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -17,13 +20,15 @@ class HomeScreen extends StatelessWidget {
                 // Top Section with Background
                 Stack(
                   children: [
-                    Container(
-                      height: 250,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(bottomRight: Radius.circular(20),bottomLeft: Radius.circular(20)),
-                        image: DecorationImage(
-                          image: AssetImage("assets/images/background_image.png"),
-                          fit: BoxFit.cover,
+                    ClipPath(
+                      clipper: WaveClipper(),
+                      child: Container(
+                        height: 300,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/images/background_image.png"),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     ),
@@ -35,7 +40,7 @@ class HomeScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(Icons.menu, color: Colors.white, size: 30),
+                              const Icon(Icons.menu, color: Colors.white, size: 30),
                               Align(
                                 alignment: Alignment.centerLeft,
                                 child: Text(
@@ -54,10 +59,12 @@ class HomeScreen extends StatelessWidget {
                                   shape: BoxShape.circle,
                                   border: Border.all(color: Colors.white, width: 2),
                                 ),
-                                child: const CircleAvatar(
+                                child:  CircleAvatar(
                                   backgroundColor: Colors.white,
                                   radius: 22,
-                                  child: Icon(Icons.person, color: Colors.black, size: 28),
+                                  child: IconButton(onPressed: () {
+                                    Navigator.push(context, MaterialPageRoute(builder: (context) =>  const UserProfileScreen()));
+                                  },icon: const Icon(Icons.person,color: Colors.black,size: 28,) )
                                 ),
                               ),
                             ],
@@ -100,7 +107,7 @@ class HomeScreen extends StatelessWidget {
       
                 // Course Categories Section
                 Padding(
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.only(left: 20,right: 20,bottom: 20,top: 5),
                   child: Column(
                     
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,8 +125,8 @@ class HomeScreen extends StatelessWidget {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         childAspectRatio: 2.5,
-                        crossAxisSpacing: 30,
-                        mainAxisSpacing: 30,
+                        crossAxisSpacing: 20,
+                        mainAxisSpacing: 20,
                         children: [
                           _courseCard("A-Levels", Colors.blueAccent),
                           _courseCard("O-Levels", Colors.purpleAccent),
