@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:study_pro/screens/IGCSE_detail.dart';
 import 'package:study_pro/screens/aleve_course_detail.dart';
+import 'package:study_pro/screens/olevel_course_detail.dart';
 
 import '../widgets/widgets.dart';
 import 'login_screen.dart';
@@ -48,7 +50,7 @@ class UserProfileScreen extends StatelessWidget {
                 child: CircleAvatar(
                   radius: 50,
                   backgroundColor: Colors.white,
-                  child: Icon(Icons.person, size: 50, color: Colors.black),
+                  backgroundImage: AssetImage("assets/images/ikram.jpg"),
                 ),
               ),
               const SizedBox(height: 10),
@@ -126,8 +128,12 @@ class UserProfileScreen extends StatelessWidget {
                     GestureDetector(
     onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>  ALevelCourseDetailScreen()));}
     ,child: _courseTile("A-Levels")),
-                    _courseTile("MDCAT"),
-                    _courseTile("SAT"),
+                    GestureDetector(
+                        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>  OlevelCourseDetailScreen()));}
+                        ,child: _courseTile("O-Levels")),
+                    GestureDetector(
+                        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>  IgcseDetailScreen()));}
+                        ,child: _courseTile("IGCSE")),
                   ],
                 ),
               ),

@@ -13,7 +13,7 @@ class SignupScreen extends StatelessWidget {
             clipper: WaveClipper(),
             child: Container(
               height: MediaQuery.of(context).size.height * 0.45,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("assets/images/background_image.png"),
                   fit: BoxFit.cover,
