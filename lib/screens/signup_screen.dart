@@ -32,12 +32,7 @@ class SignupScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 80),
-                IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
-                  onPressed: () => Get.back(),
-                ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 180),
                 const Text(
                   "Create Account",
                   style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),

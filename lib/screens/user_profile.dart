@@ -35,7 +35,7 @@ class UserProfileScreen extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(height: 10),
+              const SizedBox(height: 40),
 
               // Back Button
               Align(
