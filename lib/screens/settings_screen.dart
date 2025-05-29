@@ -15,11 +15,11 @@ class SettingsScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          Obx(() => SwitchListTile(
-            title: const Text("Dark Theme"),
-            value: controller.isDarkMode.value,
-            onChanged: (val) => controller.toggleTheme(),
-          )),
+          // Obx(() => SwitchListTile(
+          //   title: const Text("Dark Theme"),
+          //   value: controller.isDarkMode.value,
+          //   onChanged: (val) => controller.toggleTheme(),
+          // )),
           ListTile(
             title: const Text("App Info"),
             onTap: () => showAboutDialog(
