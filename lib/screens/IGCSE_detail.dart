@@ -5,7 +5,6 @@ import 'package:study_pro/screens/notes_screen.dart';
 import 'package:study_pro/screens/past_paper_screen.dart';
 
 import '../widgets/widgets.dart';
-import 'package:flutter/widgets.dart';
 
 class IgcseDetailScreen extends StatefulWidget {
   const IgcseDetailScreen({super.key});

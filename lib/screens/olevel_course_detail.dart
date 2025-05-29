@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:study_pro/screens/past_paper_screen.dart';
 
 import '../widgets/widgets.dart';
-import 'package:flutter/widgets.dart';
 
 import 'lectures_screen.dart';
 import 'notes_screen.dart';

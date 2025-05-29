@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:study_pro/screens/IGCSE_detail.dart';
 import 'package:study_pro/screens/aleve_course_detail.dart';
 import 'package:study_pro/screens/olevel_course_detail.dart';
 
+import '../routes/app_routes.dart';
 import '../widgets/widgets.dart';
 import 'login_screen.dart';
 
@@ -76,7 +79,7 @@ class UserProfileScreen extends StatelessWidget {
 
               // Edit Profile Button
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () => Get.back(),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blueAccent,
                   shape: RoundedRectangleBorder(
@@ -126,14 +129,14 @@ class UserProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 10),
                     GestureDetector(
-    onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>  ALevelCourseDetailScreen()));}
-    ,child: _courseTile("A-Levels")),
+    onTap: () => Get.toNamed('/alevel-detail'),
+    child: _courseTile("A-Levels")),
                     GestureDetector(
-                        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>  OlevelCourseDetailScreen()));}
-                        ,child: _courseTile("O-Levels")),
+    onTap: () => Get.toNamed('/olevel-detail'),
+                        child: _courseTile("O-Levels")),
                     GestureDetector(
-                        onTap: (){Navigator.push(context, MaterialPageRoute(builder: (context) =>  IgcseDetailScreen()));}
-                        ,child: _courseTile("IGCSE")),
+                        onTap: () => Get.toNamed('/igcse-detail'),
+                        child: _courseTile("IGCSE")),
                   ],
                 ),
               ),
@@ -144,12 +147,26 @@ class UserProfileScreen extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.settings, color: Colors.blueAccent),
                 title: Text("Settings", style: GoogleFonts.lora(fontSize: 16)),
-                onTap: () {},
+                onTap: () => Get.toNamed('/settings'),
+
               ),
               ListTile(
                 leading: const Icon(Icons.logout, color: Colors.redAccent),
                 title: Text("Logout", style: GoogleFonts.lora(fontSize: 16)),
-                onTap: () {},
+                onTap: () {
+                  Get.defaultDialog(
+                    title: "Logout",
+                    middleText: "Are you sure you want to log out?",
+                    textCancel: "Cancel",
+                    textConfirm: "Logout",
+                    confirmTextColor: Colors.white,
+                    onConfirm: () async {
+                      final prefs = await SharedPreferences.getInstance();
+                      await prefs.remove('isLoggedIn'); // 🧽 Clear persistent login
+                      Get.offAllNamed('/login');        // 🚪 Go back to login
+                    },
+                  );
+                },
               ),
               const SizedBox(height: 20),
             ],

@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'dart:async';
 import 'package:animate_do/animate_do.dart';
-import 'package:study_pro/screens/home_screen.dart';
-import 'package:study_pro/screens/welcome_screen.dart';
+
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool _showButton = false;
-
+  final box = GetStorage();
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 4), () {
-      setState(() {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) =>  WelcomeScreen()), // Navigate to Home
-        );
-      });
+
+    Future.delayed(const Duration(seconds: 3), () {
+      bool isLoggedIn = box.read('isLoggedIn') ?? false;
+
+      if (isLoggedIn) {
+        Get.offNamed('/home'); // ✅ Navigate to home if logged in
+      } else {
+        Get.offNamed('/login'); // 🚪 Otherwise show welcome/login flow
+      }
     });
   }
 
@@ -44,58 +46,24 @@ class _SplashScreenState extends State<SplashScreen> {
                 ),
               ),
             ),
+
+            // Centered Content
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Logo Animation with Increased Size
+                  // Logo with Animation
                   ZoomIn(
                     duration: const Duration(seconds: 2),
                     child: Image.asset(
                       "assets/images/logo.png",
-                      width: 400, // Bigger logo
+                      width: 400,
                     ),
                   ),
                   const SizedBox(height: 50),
-                  // Animated Button
-                  // _showButton
-                  //     ? BounceInUp(
-                  //   child: GestureDetector(
-                  //     onTap: () {
-                  //       print("object");
-                  //       // Add navigation logic
-                  //     },
-                  //     child: Container(
-                  //       padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 14), // Reduced size
-                  //       decoration: BoxDecoration(
-                  //         borderRadius: BorderRadius.circular(25), // Adjusted shape
-                  //         gradient: const LinearGradient(
-                  //           colors: [Color(0xFF6A11CB), Color(0xFF2575FC)],
-                  //           begin: Alignment.topLeft,
-                  //           end: Alignment.bottomRight,
-                  //         ),
-                  //         boxShadow: const [
-                  //           BoxShadow(
-                  //             color: Colors.black26,
-                  //             blurRadius: 6, // Softer shadow
-                  //             spreadRadius: 1,
-                  //             offset: Offset(0, 3),
-                  //           ),
-                  //         ],
-                  //       ),
-                  //       child: Text(
-                  //         'continue',
-                  //         style: GoogleFonts.lora(
-                  //           fontSize: 18, // Adjusted text size
-                  //           fontWeight: FontWeight.bold,
-                  //           color: Colors.white,
-                  //         ),
-                  //       ),
-                  //     ),
-                  //   ),
-                  //
-                  // )
-                       const SizedBox(),
+
+                  // Placeholder or future content (like button)
+                  const SizedBox(),
                 ],
               ),
             ),

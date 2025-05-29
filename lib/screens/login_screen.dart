@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:study_pro/screens/home_screen.dart';
-import 'package:study_pro/screens/signup_screen.dart';
+import 'package:get/get.dart';
+import '../controllers/auth_controller.dart';
 import '../widgets/widgets.dart';
 
 class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.find();
+
+    final TextEditingController emailController = TextEditingController();
+    final TextEditingController passwordController = TextEditingController();
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Curved Background with Image
             ClipPath(
               clipper: WaveClipper(),
               child: Container(
@@ -24,76 +30,74 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
 
-            // Login Form
+// Your existing curved background code...
+
             Padding(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text("Welcome Back",
-                      style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-                  SizedBox(height: 20),
+                  const Text("Welcome Back", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 20),
 
-                  // Email Field
                   TextField(
+                    controller: emailController,
                     decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.email),
+                      prefixIcon: const Icon(Icons.email),
                       hintText: "Email",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
                   const SizedBox(height: 15),
 
-                  // Password Field
                   TextField(
+                    controller: passwordController,
                     obscureText: true,
                     decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.lock),
+                      prefixIcon: const Icon(Icons.lock),
                       hintText: "Password",
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
                     ),
                   ),
                   const SizedBox(height: 10),
 
-                  // Forgot Password
                   const Align(
                     alignment: Alignment.centerRight,
                     child: Text("Forgot Password?", style: TextStyle(color: Colors.blue)),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
-                  // Login Button
-                  SizedBox(
+                  Obx(() => authController.isLoading.value
+                      ? const Center(child: CircularProgressIndicator())
+                      : SizedBox(
                     width: double.infinity,
                     height: 50,
                     child: ElevatedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  HomeScreen()));
+                        authController.login(
+                          emailController.text.trim(),
+                          passwordController.text.trim(),
+                        );
                       },
-                      style: ElevatedButton.styleFrom(shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      )),
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                      ),
                       child: const Text("Log In", style: TextStyle(fontSize: 18)),
                     ),
-                  ),
+                  )),
                   const SizedBox(height: 10),
 
-                  // Signup Button
                   SizedBox(
                     width: double.infinity,
                     height: 50,
                     child: OutlinedButton(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) =>  SignupScreen()));
+                        Get.toNamed('/signup');
                       },
                       style: OutlinedButton.styleFrom(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
                       ),
-                      child: Text("Sign Up", style: TextStyle(fontSize: 18)),
+                      child: const Text("Sign Up", style: TextStyle(fontSize: 18)),
                     ),
                   ),
                 ],
@@ -105,4 +109,3 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
-

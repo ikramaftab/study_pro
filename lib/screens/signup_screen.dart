@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import '../controllers/signup_controller.dart';
 import '../widgets/widgets.dart';
 
 class SignupScreen extends StatelessWidget {
+  const SignupScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final controller = Get.find<SignupController>();
+
     return Scaffold(
       body: Stack(
         children: [
-          // Background with wave effect
+          // Background
           ClipPath(
             clipper: WaveClipper(),
             child: Container(
@@ -21,6 +26,7 @@ class SignupScreen extends StatelessWidget {
               ),
             ),
           ),
+
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
@@ -28,32 +34,44 @@ class SignupScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: 80),
                 IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.white),
-                  onPressed: () => Navigator.pop(context),
+                  icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () => Get.back(),
                 ),
                 const SizedBox(height: 30),
                 const Text(
                   "Create Account",
-                  style: TextStyle(
-                    fontSize: 28,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                  ),
+                  style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
-                const SizedBox(height:100),
+                const SizedBox(height: 100),
+
                 Expanded(
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        _buildTextField("Name", Icons.person),
-                        _buildTextField("Email", Icons.email),
-                        _buildTextField("Password", Icons.lock, isPassword: true),
+                        _buildTextField(
+                          hint: "Name",
+                          icon: Icons.person,
+                          onChanged: (val) => controller.nameController.value = val,
+                        ),
+                        _buildTextField(
+                          hint: "Email",
+                          icon: Icons.email,
+                          onChanged: (val) => controller.emailController.value = val,
+                        ),
+                        _buildTextField(
+                          hint: "Password",
+                          icon: Icons.lock,
+                          isPassword: true,
+                          onChanged: (val) => controller.passwordController.value = val,
+                        ),
                         const SizedBox(height: 20),
-                        _buildButton("Sign Up", Colors.blue),
+                        Obx(() => controller.isLoading.value
+                            ? const CircularProgressIndicator()
+                            : _buildButton("Sign Up", Colors.blue, onTap: controller.signUp)),
                         const SizedBox(height: 10),
                         TextButton(
-                          onPressed: () => Navigator.pop(context),
-                          child: Text("Already have an account? Log in"),
+                          onPressed: () => Get.back(),
+                          child: const Text("Already have an account? Log in"),
                         ),
                       ],
                     ),
@@ -67,17 +85,21 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTextField(String hint, IconData icon, {bool isPassword = false}) {
+  Widget _buildTextField({
+    required String hint,
+    required IconData icon,
+    required Function(String) onChanged,
+    bool isPassword = false,
+  }) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10),
       child: TextField(
         obscureText: isPassword,
+        onChanged: onChanged,
         decoration: InputDecoration(
           prefixIcon: Icon(icon),
           hintText: hint,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
           filled: true,
           fillColor: Colors.white,
         ),
@@ -85,24 +107,20 @@ class SignupScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildButton(String text, Color color) {
+  Widget _buildButton(String text, Color color, {required VoidCallback onTap}) {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 15),
+          padding: const EdgeInsets.symmetric(vertical: 15),
           backgroundColor: color,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
         ),
-        onPressed: () {},
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 18, color: Colors.white),
-        ),
+        onPressed: onTap,
+        child: Text(text, style: const TextStyle(fontSize: 18, color: Colors.white)),
       ),
     );
   }
 }
-

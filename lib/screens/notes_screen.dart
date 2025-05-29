@@ -10,12 +10,12 @@ class NotesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Notes", style: GoogleFonts.lora(color: Colors.white)),
-        backgroundColor: Colors.deepPurpleAccent,
+        backgroundColor: Colors.lightGreenAccent,
       ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.deepPurple.shade900, Colors.deepPurple.shade500],
+            colors: [Colors.lightGreenAccent.shade700, Colors.deepPurple.shade500],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -44,7 +44,7 @@ class NotesScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text("Key Points", style: GoogleFonts.lora(fontSize: 20, fontWeight: FontWeight.bold)),
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Text("- Summary of Chapter ${index + 1}\n- Important formulas\n- Key concepts", style: GoogleFonts.lora(fontSize: 16)),
                     ],
                   ),
