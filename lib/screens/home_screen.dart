@@ -20,6 +20,7 @@ class HomeScreen extends StatelessWidget {
         key: _scaffoldKey,
         drawer: _buildDrawer(context),
         body: SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -31,14 +32,16 @@ class HomeScreen extends StatelessWidget {
                       height: 300,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage("assets/images/background_image.png"),
+                          image:
+                              AssetImage("assets/images/background_image.png"),
                           fit: BoxFit.cover,
                         ),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 20),
                     child: Column(
                       children: [
                         // Header
@@ -46,8 +49,10 @@ class HomeScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             IconButton(
-                              icon: const Icon(Icons.menu, color: Colors.white, size: 30),
-                              onPressed: () => _scaffoldKey.currentState!.openDrawer(),
+                              icon: const Icon(Icons.menu,
+                                  color: Colors.white, size: 30),
+                              onPressed: () =>
+                                  _scaffoldKey.currentState!.openDrawer(),
                             ),
                             Text(
                               "COURSES",
@@ -61,14 +66,16 @@ class HomeScreen extends StatelessWidget {
                               padding: const EdgeInsets.all(4),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                border: Border.all(color: Colors.white, width: 2),
+                                border:
+                                    Border.all(color: Colors.white, width: 2),
                               ),
                               child: CircleAvatar(
                                 backgroundColor: Colors.white,
                                 radius: 22,
                                 child: IconButton(
                                   onPressed: () => Get.toNamed('/profile'),
-                                  icon: const Icon(Icons.person, color: Colors.black, size: 28),
+                                  icon: const Icon(Icons.person,
+                                      color: Colors.black, size: 28),
                                 ),
                               ),
                             ),
@@ -76,16 +83,16 @@ class HomeScreen extends StatelessWidget {
                         ),
                         const SizedBox(height: 10),
                         Obx(() => Align(
-                          alignment: Alignment.centerLeft,
-                          child: Text(
-                            "Hi, ${homeController.userName.value}",
-                            style: GoogleFonts.lora(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                          ),
-                        )),
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                "Hi, ${homeController.userName.value}",
+                                style: GoogleFonts.lora(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )),
                         const SizedBox(height: 15),
                         Container(
                           decoration: BoxDecoration(
@@ -93,9 +100,11 @@ class HomeScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(30),
                           ),
                           child: TextField(
-                            onChanged: (val) => homeController.searchQuery.value = val,
+                            onChanged: (val) =>
+                                homeController.searchQuery.value = val,
                             decoration: const InputDecoration(
-                              prefixIcon: Icon(Icons.search, color: Colors.grey),
+                              prefixIcon:
+                                  Icon(Icons.search, color: Colors.grey),
                               hintText: "Search Courses",
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.all(15),
@@ -110,7 +119,8 @@ class HomeScreen extends StatelessWidget {
 
               // Course Grid
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -125,7 +135,9 @@ class HomeScreen extends StatelessWidget {
                     Obx(() {
                       final filtered = homeController.filteredCourses;
                       if (filtered.isEmpty) {
-                        return const Center(child: Text("No courses found", style: TextStyle(color: Colors.grey)));
+                        return const Center(
+                            child: Text("No courses found",
+                                style: TextStyle(color: Colors.grey)));
                       }
                       return GridView.count(
                         crossAxisCount: 2,
@@ -135,11 +147,12 @@ class HomeScreen extends StatelessWidget {
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 20,
                         children: filtered.map((course) {
-                          return _courseCard(course['title'], Color(course['color']));
+                          return _courseCard(
+                              course['title'], Color(course['color']));
                         }).toList(),
                       );
                     }),
-                    const SizedBox(height: 130),
+                    const SizedBox(height: 100),
                     Center(
                       child: Text(
                         "Start Learning Now",
@@ -190,7 +203,7 @@ class HomeScreen extends StatelessWidget {
     return StatefulBuilder(
       builder: (context, setState) {
         return Drawer(
-          backgroundColor: Colors.white,
+          backgroundColor: isDark ? Colors.black : Colors.white,
           child: ListView(
             padding: EdgeInsets.zero,
             children: [
@@ -225,7 +238,7 @@ class HomeScreen extends StatelessWidget {
               ),
               SwitchListTile(
                 secondary: const Icon(Icons.brightness_6),
-                title: const Text("Dark Theme"),
+                title: const Text("Theme"),
                 value: isDark,
                 onChanged: (val) {
                   setState(() {
@@ -246,8 +259,9 @@ class HomeScreen extends StatelessWidget {
                     textConfirm: "Logout",
                     confirmTextColor: Colors.white,
                     onConfirm: () {
-                      box.write('isLoggedIn', false);
-                      Get.offAllNamed('/login');
+                      final authController = Get.find<AuthController>();
+                      authController.logout();
+
                     },
                   );
                 },
